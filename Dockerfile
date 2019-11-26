@@ -1,10 +1,6 @@
 FROM alpine:3.2 AS socket-tunnel
 
-RUN apk add --update \
-    openssh-client \
-    bash \
-    && \
-    rm -rf /var/cache/apk/*
+RUN apk add --no-cache openssh-client bash
 
 CMD rm -rf /root/.ssh && mkdir /root/.ssh && cp -R /root/ssh/* /root/.ssh/ && chmod -R 600 /root/.ssh/* && \
 ssh \
