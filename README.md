@@ -1,4 +1,4 @@
-# docker-tunnels
+# Docker Service Tunnels
 Containers that create SSH tunnels to various services, to be used with a bastion ssh server.
 
 Based on the work of Cagatay Gurturk: https://github.com/cagataygurturk/docker-ssh-tunnel
