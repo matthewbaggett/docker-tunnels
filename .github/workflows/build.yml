@@ -1,0 +1,43 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  Socket-Tunnel:
+    name: Socket Tunnel
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Login to Registry
+        run: docker login docker.pkg.github.com -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+      - name: Build
+        run: docker build . --file Dockerfile --target socket-tunnel --tag matthewbaggett/tunnel:socket
+      - name: Publish to Registry
+        run: docker push matthewbaggett/tunnel:socket
+
+  MySQL-Tunnel:
+    name: MySQL Tunnel
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Login to Registry
+        run: docker login docker.pkg.github.com -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+      - name: Build
+        run: docker build . --file Dockerfile --target mysql-tunnel --tag matthewbaggett/tunnel:mysql
+      - name: Publish to Registry
+        run: docker push matthewbaggett/tunnel:mysql
+
+  Redis-Tunnel:
+    name: Redis Tunnel
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Login to Registry
+        run: docker login docker.pkg.github.com -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+      - name: Build
+        run: docker build . --file Dockerfile --target redis-tunnel --tag matthewbaggett/tunnel:redis
+      - name: Publish to Registry
+        run: docker push matthewbaggett/tunnel:redis
