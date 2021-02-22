@@ -4,10 +4,21 @@ on:
   push:
     branches:
       - master
+  schedule:
+    - cron: '0 6 * * TUE'
 
 jobs:
+  Lint:
+    name: Lint docker files
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Lint docker files
+        uses: docker://cdssnc/docker-lint
+
   Socket-Tunnel:
     name: Socket Tunnel
+    needs: [Lint]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -20,6 +31,7 @@ jobs:
 
   MySQL-Tunnel:
     name: MySQL Tunnel
+    needs: [Lint]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -32,6 +44,7 @@ jobs:
 
   Redis-Tunnel:
     name: Redis Tunnel
+    needs: [Lint]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
